@@ -41,8 +41,8 @@ and future diffs are generated from:
   "pixels": ["meta", "ga4"],
   "ads": {"library": "meta", "checked": "2026-08-04", "active": 0,
           "oldest_running_since": null},
-  "gates": {"attract": 18, "capture": 12, "nurture": 10, "convert": 15,
-            "ascend": 8},
+  "gates": {"attract": 22, "capture": 15, "convert": 19, "ascend": 10},
+  "gate_notes": {"attract": "why this score", "…": "…"},
   "numbers": [
     {"value": "2.1M", "label": "IG followers", "source": "…",
      "date": "2026-08-04", "tier": "CONFIRMED"}

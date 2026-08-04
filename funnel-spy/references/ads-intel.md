@@ -46,6 +46,16 @@ Ads intel and pixel detection (tech-stack.md) confirm each other:
 - Active ads but no pixel on the walked pages = the ads land on a page you
   haven't walked yet. Go find it.
 
+## Always keep the library URL
+
+Record the exact search URL you used for each library in the dossier
+(`ads[].library_url`, and in `links`). It ships as a **clickable link in the
+report** so the reader can open the ad library and scroll every ad themselves —
+one of the most-clicked things in the whole dossier. Examples:
+
+- Meta: `facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&q=<name>&search_type=keyword_exact_phrase`
+- Google: `adstransparency.google.com/?region=anywhere&domain=<domain>`
+
 ## Honesty rules
 
 - Every claim carries the library it came from and the date checked.

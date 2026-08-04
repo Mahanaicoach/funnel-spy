@@ -38,8 +38,8 @@ SCORE: [NN]/100 · weakest gate: [GATE] — [why in half a line]
 - Offer ladder: [rung → offer → price, free to high-ticket; missing rungs
   named.]
 - Numbers: [2–3 metrics, each sourced + dated, tiered.]
-- Scorecard: ATTRACT n/20 · CAPTURE n/20 · NURTURE n/20 · CONVERT n/20 ·
-  ASCEND n/20 (one clause of justification each)
+- Scorecard: ATTRACT n/25 · CAPTURE n/25 · CONVERT n/25 · ASCEND n/25
+  (one clause of justification each; email nurture is not scored — unobservable)
 - Swipe file: [3–5 short verbatim hooks / CTAs / guarantee lines, quoted.]
 - Copy read: [the copy-teardown blocks for the money pages — awareness match,
   hook type, urgency type, proof density; see copy-teardown.md.]

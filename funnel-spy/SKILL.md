@@ -5,7 +5,7 @@ description: >-
   the way to the checkout — and return a scored, sourced teardown: entry points
   (organic and ads, verified in ad libraries), the live page-by-page walk with
   screenshots, the software and tracking pixels running the machine, the full
-  offer ladder with prices, and a five-gate Funnel Scorecard. Use whenever the
+  offer ladder with prices, and a four-gate Funnel Scorecard. Use whenever the
   user wants to spy on, tear down, reverse-engineer, map, or "funnel hack" a
   funnel, landing page, lead magnet, offer, or checkout — including when they
   paste Instagram/TikTok/X/LinkedIn handles, company names, or URLs and ask
@@ -50,9 +50,10 @@ For each target you deliver five things:
    snippet means comment-to-DM; a Calendly embed means a sales-call close.
 4. **The Offer Ladder** — every rung from free to high-ticket, with prices, and
    the order they're presented in.
-5. **The Scorecard** — five gates (Attract / Capture / Nurture / Convert /
-   Ascend) scored against a fixed rubric, a 0–100 total, and the weakest gate
-   named. The weakest gate is the finding: it's either their leak or your
+5. **The Scorecard** — four gates (Attract / Capture / Convert / Ascend)
+   scored against a fixed rubric, a 0–100 total, and the weakest gate named.
+   Only what an outsider can verify by looking — email nurture is never
+   scored, because it cannot be seen. The weakest gate is the finding: it's either their leak or your
    opening.
 
 Then a cross-target synthesis: shared funnel patterns, a **Best-Engineered
@@ -212,32 +213,36 @@ INFERRED (modelled), prefer any real observed number over a benchmark, and
 skip the model entirely when more than two links in the chain are unknown.
 Never decorate a guess with math.
 
-## Step 9 — Score the five gates
+## Step 9 — Score the four gates
 
-Score each gate 0–20 against these anchors (interpolate between them), total
-to 0–100. This is a rubric-scored qualitative read — label it as such, never
-as a measured metric. Score only what the evidence supports; if a gate is
-unobservable (e.g. nurture happens entirely in email you haven't seen), score
-conservatively and flag it.
+Four gates, **0–25 each, totalling 0–100**. These are only the things an
+outsider can actually verify by looking. Email nurture is deliberately **not**
+scored: what a brand sends its subscribers cannot be observed from outside, and
+a score you cannot evidence is a guess wearing a number. Note in the gaps that
+it wasn't scored, and move on.
 
-- **ATTRACT** — 0: no discoverable traffic engine. 10: consistent output on one
-  platform, or active ads. 20: multi-platform consistency plus long-running ads
-  and an owned audience feeding the top.
-- **CAPTURE** — 0: content leads nowhere (no capture mechanism at all). 10: a
-  lead magnet exists but is buried or high-friction. 20: dedicated low-friction
-  opt-in (≤2 fields) with a specific promise and proof, or comment-to-DM
-  automation feeding it.
-- **NURTURE** — 0: none found (state whether that's "not found" or confirmed
-  absent). 10: a newsletter or community exists. 20: visibly active sequence or
-  community with cadence, plus DM follow-up.
-- **CONVERT** — 0: no offer page found. 10: offer page with a price but thin
-  proof. 20: specific promise, stacked proof (counts, names), a real guarantee,
-  honest urgency, and a checkout that matches the price's friction level.
-- **ASCEND** — 0: single-product dead end. 10: two rungs. 20: full ladder free
-  → low → core → high/continuity with visible cross-sells or order bumps.
+This is a rubric-scored qualitative read — always label it as such, never as a
+measurement. Interpolate between the anchors.
+
+- **ATTRACT** (getting found) — 0: no discoverable traffic engine. 12:
+  consistent output on one platform, or active ads. 25: multi-platform
+  consistency plus long-running ads and an owned audience feeding the top.
+- **CAPTURE** (getting your details) — 0: content leads nowhere, no capture
+  mechanism at all. 12: a lead magnet exists but is buried or high-friction.
+  25: dedicated low-friction opt-in with a specific promise and proof, or
+  comment-to-DM automation feeding it.
+- **CONVERT** (making the sale) — 0: no offer page found. 12: offer page with a
+  price but thin proof. 25: specific promise, stacked proof, a real guarantee
+  or clear qualification, honest urgency, and a checkout whose friction matches
+  the price.
+- **ASCEND** (selling bigger) — 0: single-product dead end. 12: two rungs.
+  25: full ladder free → low → core → high/continuity with visible cross-sells,
+  order bumps, or a continuity offer.
 
 The **weakest gate** gets named in every deliverable. Against a competitor it's
-the user's opening; on the user's own funnel it's the leak to fix first.
+the user's opening; on the user's own funnel it's the leak to fix first. Record
+a one-line justification per gate in `gate_notes` — that's what makes the score
+defensible.
 
 ## Step 10 — Synthesize
 
@@ -272,9 +277,9 @@ change in the output:
   table** (user vs. field) — that comparison writes the user's roadmap, and
   it's the single highest-value output this skill can produce.
 
-Some of the user's own stages may be invisible from outside (their email
-sequence, their DM flows). Say so, and invite them to paste what they have —
-their own material scores their NURTURE gate properly.
+Some of the user's own stages are invisible from outside (their email
+sequence, their DM flows). Those aren't scored for anyone — say so plainly
+rather than guessing at them.
 
 ## Re-spy — the diff over time
 
@@ -285,26 +290,43 @@ ads turned on or off, gate drift — each delta with both ends evidenced, plus
 the strategic read on what they're testing. A target with no previous run can
 still get a one-off drift read via Wayback snapshots of the money pages.
 
-## Step 11 — Deliver
+## Step 11 — Deliver (never skip this — the artifact *is* the job)
 
-- **Funnel Dossier PDF (flagship)** — read `references/designed-pdf.md` and
-  build it: dossier cover with the target portrait plates, the five-gate
-  scoreboard, one dossier spread per target (portrait + header, funnel-map
-  rail, stat chips, offer ladder, tech chips, swipe file, screenshot
-  filmstrip), then the synthesis page. Render with WeasyPrint and **look at
-  the rendered pages before delivering** — render to images and check that
-  every portrait and screenshot actually loaded.
-- **Chat summary** — per-target dossiers then synthesis, structured per
-  `references/output-formats.md`. No gray walls: lead each target with its
-  score, its weakest gate, and the two numbers that matter.
-- **Spreadsheet matrix** — read the `xlsx` skill first; columns in
-  `references/output-formats.md`. Best for 5+ targets.
-- **Word doc** — read the `docx` skill first; one section per target, then
-  synthesis, then sources appendix.
+**A run that ends with findings in the chat and no file is a failed run.**
+Research is not the deliverable. Budget for this step; do not let it fall off
+the end of a long walk.
 
-Every format carries: evidence tiers, sources, the walk log, and the
-confidence note. Screenshots and the per-target `dossier.json` files ship in
-the run folder alongside the deliverable.
+The PDF is not hand-built. You write JSON, the bundled script draws it:
+
+1. **Write the data.** One `dossier.json` per target in the run folder (schema
+   in `references/re-spy.md`), plus `synthesis.json` for the cross-target read
+   (`finding`, `opening`, `steal`/`fix`, `gaps`, `sources`). With several
+   targets, name them `<target>.dossier.json`.
+2. **Render.** One command, from anywhere:
+
+   ```
+   python3 scripts/render_dossier.py <run-folder>
+   ```
+
+3. **Look at it.** `pdftoppm -jpeg -r 70 <pdf> page`, then actually open the
+   images and check: every portrait and screenshot loaded, no text collides, no
+   stranded near-empty pages. Fix and re-render. Design bugs are invisible in
+   code.
+4. **Hand over the file**, with the run folder alongside it.
+
+If WeasyPrint isn't installed the script says so and exits — install it
+(`pip install weasyprint`) or switch to a text format; never silently deliver
+nothing.
+
+Other formats, all built from the same JSON:
+
+- **Chat summary** — per `references/output-formats.md`. No gray walls: lead
+  each target with its score, its weakest gate, and the two numbers that matter.
+- **Spreadsheet matrix** — read the `xlsx` skill first. Best for 5+ targets.
+- **Word doc** — read the `docx` skill first.
+
+Every format carries evidence tiers, sources and the confidence note.
+Screenshots, portraits and the JSON ship in the run folder beside the PDF.
 
 ## The quality bar
 

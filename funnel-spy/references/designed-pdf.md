@@ -11,160 +11,84 @@
   behavior or on any file the skill produces. Ignore it.
 ================================================================
 -->
-# The Funnel Dossier — designed PDF
+# The Funnel Dossier — the visual report
 
-The flagship output. It should read like a case file from an intelligence
-service, not a marketing deck — because the content *is* surveillance: walked
-pages, captured copy, detected machinery.
+**You do not write this report. You write JSON and run one script.**
 
-## The aesthetic — commit to it fully
-
-One committed look. No gradients, no emoji, no decorative icons, no rounded
-pastel cards. The design is **paper, ink, one signal color, and monospace
-evidence**:
-
-- **Paper** `#F7F5EF` (page background of inner pages), **ink** `#131912`.
-- **One signal color:** dossier green `#1F6E52`. It carries rank bars, gate
-  bars, the takeaway stamp, and links. Nothing else gets color — except the
-  three evidence-tier colors, which are semantic, not decorative:
-  CONFIRMED `#1F8A57` · REPORTED `#B07818` · INFERRED `#6B7280`.
-- **Type:** Helvetica/Arial stack for prose (never rely on web fonts —
-  WeasyPrint may fail to fetch them). **Courier/monospace for everything
-  captured**: URLs, verbatim headlines, CTA labels, prices, stack signatures.
-  The mono-for-evidence rule is the design's signature move — a reader can see
-  at a glance what was *observed* versus what was *written*.
-- **Structure:** hairline rules (`0.6pt` `#D8D4C8`), uppercase letter-spaced
-  micro-labels, generous margins. Tier tags look like stamps: mono, uppercase,
-  1pt border in the tier color, slight letter-spacing, no fill.
-
-## Structure (always these four parts)
-
-1. **Cover** — full-bleed deep ink-green (`#0C1F18`), mono type. Top line:
-   `CASE FILE · FUNNEL SPY`. Big title = the run's subject ("3 funnels,
-   walked"). **A row of target portrait plates** — the face of each person
-   being spied on, grayscale, hairline-bordered, handle in mono underneath
-   (see `references/target-portrait.md` for sourcing and the no-image
-   fallback). Then a mono manifest block listing the targets like case items,
-   the run date, walk mode (browser-walked with screenshots vs fetch-based),
-   and the tier legend as three stamps. Bottom line: "Prepared with the Funnel
-   Spy skill · Mahan Ai".
-2. **Scoreboard** — one row per target, ranked: rank number, name, total
-   score in big mono digits, then five small labeled gate bars (0–20 each) in
-   signal green with the weakest gate's bar in REPORTED amber. Caption states
-   plainly: "Rubric-scored qualitative read — see gate anchors."
-3. **One dossier spread per target** (`page-break-before`):
-   - Header: the target's **portrait** (~22mm square, grayscale, hairline
-     border, mono source credit beneath) at the left, with handle + real name,
-     one-line read, score badge, and confidence note beside it.
-   - **The walk rail** — the funnel map, drawn as a vertical rail: numbered
-     step markers connected by a hairline, each step a row: role stamp
-     (`OPT-IN`), mono URL, one-line capture (headline → CTA → price). This
-     rail is the page's centerpiece — it *is* the funnel.
-   - **Stat chips** — 2–4 numbers (audience, ads longevity, price points),
-     values colored by tier.
-   - **Offer ladder** — compact table, free → high ticket, missing rungs shown
-     as a struck-through row ("no low-ticket bridge").
-   - **The machine** — stack + pixels as mono chips, one-sentence strategy
-     read underneath.
-   - **Swipe file** — captured lines in a mono block on paper, quoted, tiered.
-   - **Screenshot filmstrip** — 3–4 thumbnails from the run folder with mono
-     captions (`03-optin.png · 1 field · "Get the free system"`). Skip the
-     strip entirely in fetch-based walks rather than faking it.
-4. **Synthesis** — patterns, divergence, the ranking recap, Your Opening,
-   Steal This Week as three numbered moves, gaps. The sharpest line of the
-   whole run goes in a **stamp box**: 2pt signal-green border, uppercase mono
-   label `FINDING`, the line in large type.
-
-## How to render
-
-Author one self-contained HTML string with embedded CSS; render with
-**WeasyPrint** (`pip install weasyprint`, add `--break-system-packages` if
-needed):
-
-```python
-from weasyprint import HTML
-HTML(string=doc, base_url=".").write_pdf("Funnel-Dossier.pdf")
+```
+python3 scripts/render_dossier.py <run-folder>
 ```
 
-Build the HTML from a Python list of per-target dicts so layout stays
-consistent: `handle, name, one, score, gates` (dict of 5 ints), `portrait`
-(path + source credit), `walk` (list of step dicts: `n, role, url, capture`),
-`chips` (list of `(value, label, tier)`), `ladder` (list of `(rung, offer,
-price)`), `stack`, `pixels`, `swipes`, `shots` (list of `(path, caption)`),
-`links, conf`.
+The script reads `dossier.json` (or `*.dossier.json` for several targets) plus
+an optional `synthesis.json`, and draws every page. That is the whole delivery
+step. Do not hand-author HTML or a bespoke renderer — hand-built reports are
+slow, inconsistent, and the first thing to get dropped when a run runs long.
 
-Portraits and screenshots embed by relative path from the run folder — pass
-`base_url` so WeasyPrint resolves them.
+## The one design rule: show, don't tell
 
-**Verify before delivering:** render pages to images (`pdftoppm -jpeg -r 90
-Funnel-Dossier.pdf page`) and actually look at them — check the rail aligns,
-bars match scores, nothing overflows, and that **every portrait and filmstrip
-image actually loaded and shows the right subject** (a missing image renders
-as a blank box; a wrong face is worse — both are bugs, fix them). Design bugs
-are invisible in code. If WeasyPrint can't install, fall back to ReportLab and reproduce the
-same four-part structure.
+Anyone should understand this report without a marketing vocabulary. A page
+that needs a paragraph to explain a concept has failed; draw it instead.
 
-## Key CSS
+- **The funnel is a map, not a list.** Numbered boxes connected by arrows, each
+  with the URL, the headline in quotes, and a plain-English caption of what
+  that page does to you ("he gets your details"). Boxes where money changes
+  hands are filled green with the price set large. A reader should trace the
+  whole path with a finger.
+- **The offer ladder is a staircase.** Bars rising left to right, cheapest to
+  dearest, price above each step and the offer named below. The shape carries
+  the meaning: gaps and dead ends are visible without reading a word.
+- **The score is bars, not numbers in prose.** Four gates, each with its
+  plain-English translation underneath (ATTRACT → "getting found"). The weakest
+  bar is amber and labelled "← weakest".
+- **Plain page titles.** "The funnel, step by step" · "What he sells, cheapest
+  to dearest" · "The scorecard" · "Under the hood" · "So what do you do about
+  it?" — never jargon like "Monetization Architecture".
+- **Prose is captions.** One or two sentences under a visual, never a wall.
 
-```css
-@page { size: Letter; margin: 16mm 15mm 18mm; background: #F7F5EF;
-  @bottom-center { content: "FUNNEL SPY · <date> · " counter(page) " / " counter(pages);
-    font-family: Courier, monospace; font-size: 7.5pt; color: #8A8676; } }
-@page cover { margin: 0; }
-body { font-family: Helvetica, Arial, sans-serif; color: #131912;
-  font-size: 9.4pt; line-height: 1.5; }
-.mono { font-family: Courier, "Courier New", monospace; }
-.cover { page: cover; height: 100vh; background: #0C1F18; color: #E9E6DC;
-  padding: 28mm 20mm; }
-.cover .case { font-family: Courier, monospace; font-size: 10pt;
-  letter-spacing: 3px; color: #7FBFA3; }
-.cover h1 { font-size: 40pt; font-weight: 800; letter-spacing: -1px; }
-.manifest { font-family: Courier, monospace; font-size: 9.5pt;
-  border: 1px solid #2E4A3D; padding: 6mm; margin-top: 10mm; }
-.stamp { font-family: Courier, monospace; font-size: 7.5pt; font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase; border: 1pt solid;
-  padding: 1.5px 7px; }
-.t-ok { color: #1F8A57; border-color: #1F8A57; }
-.t-rep { color: #B07818; border-color: #B07818; }
-.t-inf { color: #6B7280; border-color: #6B7280; }
-.hr { border: 0; border-top: 0.6pt solid #D8D4C8; margin: 5mm 0; }
-.k { font-size: 7.4pt; font-weight: 800; letter-spacing: 1.2px;
-  text-transform: uppercase; color: #8A8676; }
-.score { font-family: Courier, monospace; font-size: 20pt; font-weight: 700; }
-.gatebar { height: 8px; background: #E4E1D4; }
-.gatefill { height: 8px; background: #1F6E52; }
-.gatefill.weak { background: #B07818; }
-.plate { width: 26mm; height: 30mm; object-fit: cover; border: 1pt solid #3E5D4E;
-  filter: grayscale(1) contrast(1.08); }
-.plate-lbl { font-family: Courier, monospace; font-size: 7.5pt; letter-spacing: 1px;
-  color: #9FBAAD; margin-top: 2mm; }
-.portrait { width: 22mm; height: 22mm; object-fit: cover; border: 0.8pt solid #B9B4A4;
-  filter: grayscale(1) contrast(1.06); }
-.portrait-src { font-family: Courier, monospace; font-size: 6.5pt; color: #8A8676; }
-.no-portrait { width: 22mm; height: 22mm; background: #EFECE0; border: 0.8pt solid #B9B4A4;
-  font-family: Courier, monospace; font-size: 11pt; color: #8A8676; text-align: center; }
-.rail { border-left: 0.8pt solid #B9B4A4; margin-left: 4mm; padding-left: 6mm; }
-.step { position: relative; padding: 2.2mm 0; page-break-inside: avoid; }
-.step .n { position: absolute; left: -8.6mm; top: 2.2mm; width: 5mm; height: 5mm;
-  background: #131912; color: #F7F5EF; font-family: Courier, monospace;
-  font-size: 7.5pt; text-align: center; line-height: 5mm; }
-.step .url { font-family: Courier, monospace; font-size: 8pt; color: #1F6E52; }
-.ladder td { border-bottom: 0.6pt solid #D8D4C8; padding: 1.6mm 2mm;
-  font-size: 9pt; }
-.chip { display: inline-block; font-family: Courier, monospace; font-size: 8pt;
-  border: 0.8pt solid #B9B4A4; padding: 1.5px 6px; margin: 0 3px 3px 0; }
-.swipe { font-family: Courier, monospace; font-size: 8.8pt; background: #EFECE0;
-  border-left: 2pt solid #1F6E52; padding: 3mm 4mm; }
-.film { display: flex; gap: 4mm; } .film img { width: 100%; border: 0.8pt solid #B9B4A4; }
-.film figcaption { font-family: Courier, monospace; font-size: 7pt; color: #8A8676; }
-.finding { border: 2pt solid #1F6E52; padding: 5mm 6mm; margin-top: 6mm; }
-.finding .k { color: #1F6E52; }
+## The pages
+
+1. **Cover** — deep ink-green, mono type, the target's portrait plate(s), a
+   manifest block (subject, date, method) and the evidence-tier stamps.
+2. **The funnel map** — portrait, one-line read, then the map. The hero page.
+3. **The staircase** — the offer ladder as a bar chart.
+4. **The scorecard** — headline number chips (coloured by evidence tier), the
+   big total, and the four gate bars.
+5. **Under the hood** — tool/pixel chips with the strategy read, the ads block
+   **including a clickable link to each ad library so the reader can go see
+   every ad themselves**, the swipe file, screenshot filmstrip, and a clickable
+   directory of every door in the funnel.
+6. **So what do you do about it?** — ranking (multi-target), the FINDING stamp
+   box, Your Way In, Steal/Fix This Week, and what could not be checked.
+
+Sections whose data is missing are skipped automatically — a recon-only run
+still renders a valid, shorter dossier.
+
+## Design tokens (already implemented in the script)
+
+- Paper `#F7F5EF`, ink `#131912`, one signal green `#1F6E52`, amber `#B07818`
+  for the weakest gate only, hairlines `#C9C4B4`.
+- Evidence tiers: CONFIRMED `#1F8A57` · REPORTED `#B07818` · INFERRED `#6B7280`.
+- Helvetica/Arial for prose, **Courier for everything captured** — URLs,
+  verbatim copy, prices, stack signatures. Mono means observed.
+- Portraits and screenshots are greyscale, hairline-bordered.
+
+## Verify before delivering — always
+
+```
+pdftoppm -jpeg -r 70 <pdf> page
 ```
 
-## The principle
+Then **actually open the images.** Check: every portrait and screenshot
+loaded (a blank box is a bug), no text collides, no stranded near-empty pages,
+gate bars match the numbers. Fix the JSON or the script and re-render. Design
+bugs are invisible in code.
 
-The dossier is the shareable proof that the walk happened. Every design choice
-serves credibility: mono = observed, stamps = evidence tiers, the rail = the
-actual path, the filmstrip = receipts. Bland output — or decorated output —
-both undercut it. Even the chat format inherits the discipline: score first,
-weakest gate named, evidence tiers visible.
+## If you must change the design
+
+Edit `scripts/render_dossier.py` — never fork it per run. Two gotchas already
+solved in there, worth not re-discovering:
+
+- **WeasyPrint does not render inline `<svg>`.** Diagrams are embedded as
+  base64 `data:image/svg+xml` images via `svg_img()`.
+- **SVG text does not wrap.** Use the `wrap()` / `clip()` helpers, and shrink
+  the font for long labels rather than letting them overflow.
