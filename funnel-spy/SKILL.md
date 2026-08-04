@@ -212,6 +212,12 @@ long-running ads = paid acquisition; GA4 alone + no pixels = organic-only.
 
 Follow `references/ads-intel.md`: check the Meta Ad Library, Google Ads
 Transparency Center, and (where reachable) the TikTok library for each target.
+
+**Scope Meta to the advertiser, never to a keyword.** A keyword search matches
+text inside ads and returns unrelated advertisers. Use the ad-library typeahead
+to select the advertiser (its rows show the verified Facebook/Instagram handles
+and follower counts — use the handles to disambiguate common names), then keep
+the resulting `view_all_page_id` and store it as `meta_page_id`.
 Record: are they running ads at all, how many are active, how long the oldest
 running ad has been live (an ad running 90+ days is a proven winner — say so),
 and the ads' destination URLs. **Feed those destination URLs back into Step 5**

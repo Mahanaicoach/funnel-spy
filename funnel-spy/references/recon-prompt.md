@@ -46,9 +46,10 @@ Return exactly these sections:
    URLs you actually found — never guessed paths.
 
 2. ENTRY POINTS — where strangers enter: primary platform and content type,
-   posting cadence if visible, and any sign of paid ads (mentions, "sponsored"
-   content, an ads page). The orchestrator will verify ads in the ad
-   libraries — you just surface the leads.
+   posting cadence if visible, and any sign of paid ads. Report their exact
+   **Facebook and Instagram handles** (e.g. @ahormozi / @hormozi) — the
+   orchestrator needs them to scope the Meta Ad Library to this advertiser
+   rather than keyword-matching a common name.
 
 3. CHANNELS — every social platform they run (Instagram, YouTube, TikTok, X,
    LinkedIn, Facebook, Threads, podcast, newsletter). For each: follower count

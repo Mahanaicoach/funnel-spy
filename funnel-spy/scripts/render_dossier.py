@@ -138,13 +138,21 @@ def funnel_map_svg(target):
     if not chain:
         return ""
 
-    # Sized so a 7-step funnel still fits on one page beneath the header.
+    # The social platforms ARE the top of the funnel — draw them as a fan-in
+    # band above step 01 rather than pretending the funnel starts at a website.
+    chans = (target.get("channels") or [])[:8]
+
     n = len(chain)
     BH = 62 if n <= 5 else (54 if n <= 7 else 46)
     GAP = 24 if n <= 5 else (17 if n <= 7 else 12)
+    if chans:                      # make room for the band
+        BH -= 6
+        GAP -= 3
     BW, PAD = 470, 12
     W = BW + 2 * PAD
-    H = PAD + n * BH + (n - 1) * GAP + PAD
+    CH, FAN = 30, 30               # chip height, fan-in depth
+    band = (16 + CH + FAN) if chans else 0
+    H = PAD + band + n * BH + (n - 1) * GAP + PAD
 
     parts = [
         f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
@@ -153,7 +161,36 @@ def funnel_map_svg(target):
         f'markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="{LINE}"/></marker></defs>',
     ]
 
-    y = PAD
+    if chans:
+        parts.append(f'<text x="{PAD}" y="{PAD - 2}" font-size="7.6" font-weight="700" '
+                     f'letter-spacing="1.2" fill="{GREY}" font-family="Courier, monospace">'
+                     f'THE FREE CONTENT LAYER &#8212; EVERYONE STARTS HERE</text>')
+        cw = (BW - (len(chans) - 1) * 5) / len(chans)
+        cy0 = PAD + 8
+        apex = (PAD + BW / 2, cy0 + CH + FAN - 4)
+        for i, c in enumerate(chans):
+            cx = PAD + i * (cw + 5)
+            primary = bool(c.get("primary"))
+            parts.append(f'<rect x="{cx}" y="{cy0}" width="{cw}" height="{CH}" rx="2" '
+                         f'fill="{"#EAF0EC" if primary else "#FFFFFF"}" '
+                         f'stroke="{GREEN if primary else LINE}" '
+                         f'stroke-width="{1.4 if primary else 1}"/>')
+            label = plain(c.get("platform", "")).split(" (")[0].split(" /")[0]
+            lfs = min(8.5, (cw - 6) / (len(label) * 0.52)) if label else 8.5
+            parts.append(f'<text x="{cx + cw / 2}" y="{cy0 + 13}" text-anchor="middle" '
+                         f'font-size="{lfs:.1f}" font-weight="700" fill="{INK}">'
+                         f'{svg_esc(label)}</text>')
+            aud = plain(c.get("audience") or "")
+            if aud and "not " not in aud:
+                parts.append(f'<text x="{cx + cw / 2}" y="{cy0 + 24}" text-anchor="middle" '
+                             f'font-size="7" fill="{GREY}">{svg_esc(aud)}</text>')
+            # fan-in line to the single convergence point
+            parts.append(f'<line x1="{cx + cw / 2}" y1="{cy0 + CH + 2}" '
+                         f'x2="{apex[0]}" y2="{apex[1]}" stroke="{LINE}" stroke-width="0.9"/>')
+        parts.append(f'<line x1="{apex[0]}" y1="{apex[1]}" x2="{apex[0]}" y2="{apex[1] + 10}" '
+                     f'stroke="{GREEN}" stroke-width="1.6" marker-end="url(#arw)"/>')
+
+    y = PAD + band
     for i, s in enumerate(chain):
         paid = money_step(s)
         fill = "#EAF0EC" if paid else "#FFFFFF"
@@ -560,9 +597,9 @@ def page_map(t):
 <table><tr>
   <td style="width:28mm">{img}</td>
   <td style="padding-left:5mm;vertical-align:top">
-    <h2 class="h">The funnel, step by step</h2>
-    <div class="lede">{who}. Follow the arrows: this is the exact path a stranger walks
-    from first click to handing over money. Green boxes are where money changes hands.</div>
+    <h2 class="h">The whole funnel, top to bottom</h2>
+    <div class="lede">{who}. Start at the top: every platform funnels into one page, then
+    follow the arrows straight down to the money. Green boxes are where you pay.</div>
   </td>
 </tr></table>
 {('<div class="note" style="font-style:italic;margin-bottom:4mm">' + one + '</div>') if one else ''}
@@ -582,10 +619,10 @@ def page_channels(t):
         crossblock = ('<div class="k" style="margin-top:6mm">HOW THE CHANNELS FEED EACH OTHER</div>'
                       f'<div style="margin-top:2mm">{rows}</div>')
     return f"""<div class="page"></div>
-<h2 class="h">Where the traffic comes from</h2><div class="rule"></div>
-<div class="lede">Before anyone reaches a sales page they are on a social platform. This is
-every channel he runs, the exact link each one points at, and the single place they all
-funnel into.</div>
+<h2 class="h">The top of the funnel, close up</h2><div class="rule"></div>
+<div class="lede">A closer look at the row of platforms from the funnel map: what each channel
+is for, and the exact link it points at. Where those links differ per platform, that is how
+they tell which channel produced the lead.</div>
 {svg_img(c)}
 {('<div class="note" style="margin-top:5mm">' + esc(read) + '</div>') if read else ''}
 {crossblock}"""
@@ -596,10 +633,11 @@ def page_ladder(t):
     if not l:
         return ""
     return f"""<div class="page"></div>
-<h2 class="h">What he sells, cheapest to dearest</h2>
+<h2 class="h">…and then the climb back up</h2>
 <div class="rule"></div>
-<div class="lede">Each step up is a bigger price and a smaller crowd. The staircase is how
-someone climbs from free reader to biggest-ticket buyer.</div>
+<div class="lede">The funnel narrows going down; the money goes the other way. Once someone
+is inside, this is the staircase they climb — each step a bigger price and a smaller crowd.
+Watch for a missing step: that gap is where a competitor gets in.</div>
 {svg_img(l)}"""
 
 
@@ -649,7 +687,9 @@ def block_machine(t):
             continue
         bits = [f'<b>{esc(a.get("library","")).title()}</b>:']
         if a.get("active") not in (None, ""):
-            bits.append(f'{esc(a["active"])} active')
+            bits.append(f'{esc(a["active"])} active ads')
+        if a.get("scope"):
+            bits.append(f'({esc(a["scope"])})')
         if a.get("oldest_running_since"):
             bits.append(f'oldest running since {esc(a["oldest_running_since"])}')
         if a.get("advertiser"):
@@ -785,7 +825,7 @@ def main():
 
     body = [cover(targets, meta)]
     for t in targets:
-        body += [page_channels(t), page_map(t), page_ladder(t), page_score(t),
+        body += [page_map(t), page_ladder(t), page_channels(t), page_score(t),
                  page_detail(t, run)]
     body.append(page_synthesis(syn, targets))
 
