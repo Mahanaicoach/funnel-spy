@@ -1,0 +1,80 @@
+{
+  "skill_name": "funnel-spy",
+  "evals": [
+    {
+      "id": 0,
+      "name": "creator-full-walk",
+      "prompt": "spy on @thedankoe's funnel — walk it end to end, every page and every price, tell me what tech it runs on, and score it",
+      "expected_output": "A single-target funnel dossier: an ordered walk from bio link / hub through opt-in and offer pages to a checkout, with per-page captures (headline, CTA, price, proof, friction) and screenshots (or an explicit fetch-based fallback note). Copy teardown on the money pages. Tech stack and pixels detected from page source with a strategy read. Offer ladder with prices. Five-gate scorecard with rubric-consistent scores and the weakest gate named. A dossier.json saved to the run folder. Evidence tiers applied throughout, sources cited.",
+      "files": [],
+      "assertions": [
+        {"text": "Produces an ordered walk log (entrance through checkout) with per-page role, headline, CTA, and price captures"},
+        {"text": "At least one price is CONFIRMED from an owned page seen first-hand, not from a third-party summary"},
+        {"text": "Runs the copy teardown on at least one money page (awareness match, hook type, urgency type, proof density)"},
+        {"text": "Detects funnel/email/checkout tooling or pixels from actual page source, and states what the stack implies strategically"},
+        {"text": "Includes a five-gate scorecard (Attract/Capture/Nurture/Convert/Ascend) with a 0-100 total and the weakest gate named"},
+        {"text": "States the walk mode honestly (browser-walked with screenshots vs fetch-based) rather than implying screenshots that don't exist"},
+        {"text": "Writes a dossier.json for the target into the run folder"},
+        {"text": "Applies CONFIRMED/REPORTED/INFERRED tags and cites real source URLs"}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "saas-ads-and-stack",
+      "prompt": "tear down gohighlevel's funnel for me — how does a stranger become a paying customer, are they running ads, and what's their own stack?",
+      "expected_output": "A company-target dossier: identifies the trial and/or demo-call paths as the funnel, walks the pricing and signup pages, checks the Meta Ad Library / Google Ads Transparency Center for active ads with longevity, detects pixels and tooling on their own pages, separates the buyer (agency owner) from the end user, and builds the plan ladder with per-plan pricing.",
+      "files": [],
+      "assertions": [
+        {"text": "Identifies the actual conversion paths (free trial and/or demo call) rather than assuming a creator-style lead-magnet funnel"},
+        {"text": "Checks at least one ad transparency library and reports active-ad count and longevity, or honestly reports the library as unreachable"},
+        {"text": "Feeds ad destination URLs into the walk when ads are found"},
+        {"text": "Builds a plan ladder with per-plan prices tagged CONFIRMED from the pricing page"},
+        {"text": "Separates the paying buyer from the end user in the read"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "anchored-duel",
+      "prompt": "spy on @sabrina_ramonov and @thedankoe — I sell an AI automation course at $497. where's my opening?",
+      "expected_output": "Two walked dossiers plus a synthesis: funnel patterns, a Best-Engineered ranking driven by the two scorecards, a 'Your opening' section that explicitly uses the user's $497 course as the anchor, and a 'Steal this week' list of exactly three concrete moves each traceable to an observed page. Recon agents run in parallel; walks run sequentially; gaps named.",
+      "files": [],
+      "assertions": [
+        {"text": "Produces a separate walked dossier with a scorecard for BOTH targets"},
+        {"text": "Ranks the two by scorecard total, not by follower count alone"},
+        {"text": "Includes a 'Your opening' that references the user's $497 course against the observed funnels"},
+        {"text": "Includes exactly three 'Steal this week' moves, each tied to something observed in a walk"},
+        {"text": "Runs recon in parallel but walks targets in the main loop"},
+        {"text": "Names anything that couldn't be verified instead of papering over it"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "single-page-teardown",
+      "prompt": "walk this landing page and tell me exactly why it converts: https://www.gohighlevel.com/ — quick, I don't need the full report",
+      "expected_output": "The light path: no recon fan-out, no full pipeline. Walks the one page and its immediate chain, runs the full copy teardown (awareness level vs traffic, hook type, offer presentation, risk reversal, urgency classification cross-checked against detected tech, proof density, CTA read), detects the stack/pixels on that page, scores the CONVERT gate only with rubric justification, and ends with a short steal list. Offers the full pipeline as a follow-up rather than running it.",
+      "files": [],
+      "assertions": [
+        {"text": "Skips recon fan-out and delivers fast — single page plus its immediate chain only"},
+        {"text": "Runs the full copy-teardown framework on the page, including classifying the urgency type"},
+        {"text": "Cross-checks urgency claims against tech detection (e.g. evergreen countdown tooling) when present"},
+        {"text": "Scores only the CONVERT gate, with rubric justification, instead of inventing a full five-gate score from one page"},
+        {"text": "Quotes only short verbatim snippets (headlines, CTAs, guarantee lines), never wholesale page copy"},
+        {"text": "Offers the full pipeline as a follow-up instead of running it unasked"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "mirror-mode",
+      "prompt": "spy on my own funnel: https://example-user-site.com — where am I leaking? be honest, don't go easy on me",
+      "expected_output": "Mirror mode: the user's own funnel gets the identical pipeline — walk, copy teardown, stack detection, five-gate rubric with no softened scores. The weakest gate is reported as the leak, and the output ends with a Fix This Week list (three moves, ordered by gate impact, each pointing at a specific observed page). States plainly which stages are unobservable from outside (their email sequence, DM flows) and invites the user to supply that material rather than scoring it blind.",
+      "files": [],
+      "assertions": [
+        {"text": "Applies the same five-gate rubric to the user's own funnel without softening scores"},
+        {"text": "Names the weakest gate as the leak"},
+        {"text": "Delivers a Fix This Week list of three moves, each tied to a specific observed page"},
+        {"text": "Flags unobservable stages (own email sequence, DM flows) honestly and invites the user to supply them"},
+        {"text": "Does not invent competitor comparisons when no competitors were in the run"}
+      ]
+    }
+  ]
+}
