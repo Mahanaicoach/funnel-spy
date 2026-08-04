@@ -105,7 +105,13 @@ def wrap(s, width):
     return lines
 
 
+def mono_w(s, fs):
+    """Width of a Courier string at font-size fs (advance is 0.6em)."""
+    return len(plain(s)) * fs * 0.6
+
+
 def clip(s, n):
+    """Shorten prose. Never use this on a URL — a clipped link cannot be visited."""
     s = plain(s)
     return s if len(s) <= n else s[: n - 1].rstrip() + "…"
 
@@ -163,35 +169,64 @@ def funnel_map_svg(target):
                      f'text-anchor="middle">{str(s.get("n", i + 1)).zfill(2)}</text>')
 
         tx = PAD + 38
+        right = PAD + BW - 12
+        avail = right - tx
         role = plain(s.get("role", "")).upper()
         r1, r2, r3 = y + BH * 0.28, y + BH * 0.56, y + BH * 0.83
+
+        # --- line 1: role on the left, price on the right -------------------
+        # The price lives up here so the URL below can own the full width and
+        # never has to be truncated.
+        price = plain(s.get("price") or "")
+        say = ROLE_PLAIN.get(plain(s.get("role", "")).lower(), "")
+        role_w = mono_w(role, 9.5) + len(role) * 1.4
+        say_w = len(say) * 9 * 0.47 if say else 0
+
+        price_fs = 15 if (paid and len(price) <= 12) else 10.5
+        if price:
+            # shrink, then drop the plain-English caption, before ever colliding
+            while price_fs > 7 and role_w + 14 + say_w + 12 + mono_w(price, price_fs) > avail:
+                if price_fs <= 9 and say:
+                    say, say_w = "", 0
+                price_fs -= 0.5
+
         parts.append(f'<text x="{tx}" y="{r1}" font-size="9.5" font-weight="700" '
                      f'letter-spacing="1.4" fill="{GREEN if paid else INK}" '
                      f'font-family="Courier, monospace">{svg_esc(role)}</text>')
-
-        say = ROLE_PLAIN.get(plain(s.get("role", "")).lower(), "")
         if say:
-            parts.append(f'<text x="{tx + len(role) * 6.6 + 12}" y="{r1}" font-size="9" '
+            parts.append(f'<text x="{tx + role_w + 12}" y="{r1}" font-size="9" '
                          f'fill="{GREY}" font-style="italic">{svg_esc(say)}</text>')
-
-        # The price sits on the same line as the URL — give it room, don't overlap.
-        price = plain(s.get("price") or "")
-        price_fs = 16 if (money_step(s) and len(price) <= 11) else (11 if len(price) <= 18 else 9)
-        url_max = 62 if not price else max(24, int(62 - len(price) * price_fs / 9.6))
-        parts.append(f'<text x="{tx}" y="{r2}" font-size="9.5" fill="{GREEN}" '
-                     f'font-family="Courier, monospace">{svg_esc(clip(s.get("url", ""), url_max))}</text>')
-
-        desc = s.get("headline") or s.get("note") or s.get("proof") or ""
-        if desc:
-            q = f'“{clip(desc, 74)}”' if s.get("headline") else clip(desc, 74)
-            parts.append(f'<text x="{tx}" y="{r3}" font-size="10" fill="#4A5148">'
-                         f'{svg_esc(q)}</text>')
-
         if price:
-            parts.append(f'<text x="{PAD + BW - 12}" y="{r2 + (4 if price_fs >= 16 else 0)}" '
-                         f'text-anchor="end" font-size="{price_fs}" font-weight="700" '
+            parts.append(f'<text x="{right}" y="{r1 + (2 if price_fs >= 15 else 0)}" '
+                         f'text-anchor="end" font-size="{price_fs:.1f}" font-weight="700" '
                          f'font-family="Courier, monospace" '
                          f'fill="{GREEN if paid else GREY}">{svg_esc(price)}</text>')
+
+        # --- line 2: the URL, always complete -------------------------------
+        # Never clipped: shrink to fit, and only if it is still too small to
+        # read does it wrap onto the description line.
+        url = plain(s.get("url", ""))
+        url_fs, url_lines = 9.5, [url]
+        if url:
+            if mono_w(url, url_fs) > avail:
+                url_fs = max(6.0, avail / (len(url) * 0.6))
+            if mono_w(url, url_fs) > avail:          # still too long: wrap it
+                url_fs = 7.5
+                per = max(10, int(avail / (url_fs * 0.6)))
+                url_lines = [url[i:i + per] for i in range(0, len(url), per)][:2]
+            for j, ln in enumerate(url_lines):
+                parts.append(f'<text x="{tx}" y="{r2 + j * (url_fs + 1.5)}" '
+                             f'font-size="{url_fs:.1f}" fill="{GREEN}" '
+                             f'font-family="Courier, monospace">{svg_esc(ln)}</text>')
+
+        # --- line 3: what the page says -------------------------------------
+        desc = s.get("headline") or s.get("note") or s.get("proof") or ""
+        if desc and len(url_lines) == 1:
+            desc_fs = 10
+            per = int(avail / (desc_fs * 0.5))
+            q = f'“{clip(desc, per)}”' if s.get("headline") else clip(desc, per)
+            parts.append(f'<text x="{tx}" y="{r3}" font-size="{desc_fs}" fill="#4A5148">'
+                         f'{svg_esc(q)}</text>')
 
         if i < len(chain) - 1:
             cx = PAD + BW / 2

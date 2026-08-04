@@ -92,3 +92,7 @@ solved in there, worth not re-discovering:
   base64 `data:image/svg+xml` images via `svg_img()`.
 - **SVG text does not wrap.** Use the `wrap()` / `clip()` helpers, and shrink
   the font for long labels rather than letting them overflow.
+- **Never truncate a URL.** A clipped link cannot be visited, which defeats the
+  point of the map. URLs get the full box width (the price sits on the line
+  above) and auto-shrink via `mono_w()` to fit; only if that would make them
+  unreadable do they wrap. `clip()` is for prose only.

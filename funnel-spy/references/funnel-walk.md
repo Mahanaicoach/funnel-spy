@@ -58,7 +58,7 @@ to find what feeds it.
 
 | Field | What to record |
 |---|---|
-| URL + timestamp | As loaded, after redirects |
+| URL + timestamp | As loaded, after redirects — record it **in full**; a truncated URL is not a finding, it is a dead end |
 | Role | entrance / hub / opt-in / sales / webinar / booking / community / checkout / thank-you |
 | Headline + subhead | Verbatim, kept short (a line or two) |
 | Primary CTA | Button text verbatim, and where it leads |
