@@ -183,10 +183,17 @@ also tells you which entry point to walk first in Step 5.
 ## Step 5 — Walk each funnel (the core of this skill)
 
 Follow `references/funnel-walk.md` exactly. In brief: start where a stranger
-starts (bio link, ad landing URL, or homepage), follow the primary CTA at each
-hop, and at every page capture the URL, its role, the headline and CTA
-verbatim, prices, proof elements, urgency mechanics, form friction, and a
-screenshot. The checkout is the last stop — capture it fully. Mine
+actually lands (the URL a channel links to, or an ad's landing page — usually
+**not** the homepage), follow the primary CTA at each hop, and at every page
+capture the URL, its role, the headline and CTA verbatim, prices, proof
+elements, urgency mechanics, form friction, and a screenshot.
+
+**The chain is the observed path, not the site map.** A page enters the chain
+only when you can name what routes traffic to it — record that in `from`. If
+the only way to reach a page is the navigation menu, it is not a funnel step:
+put it in `other_doors` instead. And expect **parallel funnels** — organic and
+paid usually differ, and paid traffic often skips the free layer entirely; give
+each its own `branch` rather than flattening them into one line. The checkout is the last stop — capture it fully. Mine
 `sitemap.xml`, `robots.txt`, and the Wayback Machine for the pages the funnel
 hides (thank-you pages, upsells, old pricing).
 

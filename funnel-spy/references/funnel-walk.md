@@ -42,17 +42,58 @@ label, fetch-based walks don't.
 Screenshots go to the run folder as `<target>-<nn>-<role>.png`, numbered in
 walk order.
 
+## The chain is the observed path, not the site map
+
+This is the rule that decides whether the whole report is right or wrong.
+
+**A page belongs in the chain only if something actually routes traffic to
+it.** For every step, record `from` — what sent you there (a named channel's
+bio link, an ad, the previous page's primary CTA). If you cannot name what
+routes a visitor to a page, it is not a step in the funnel.
+
+The classic error is walking the *website* instead of the *funnel*: starting at
+the homepage because that's where you'd start browsing, then following the
+navigation menu. Real traffic almost never does this. Creator channels link
+**deep** — straight to an opt-in or a landing variant — so the homepage is
+usually not step 01, and often not in the funnel at all. Include it only if a
+channel or an ad genuinely points at it.
+
+Test each candidate step with one question: *what would put a stranger on this
+page?* If the only answer is "clicking the menu", it is not a funnel step.
+
 ## Where to start
 
 Start where a stranger starts, in priority order:
 
-1. The **ad landing URL** if ads intel found active ads — paid entrances are
-   the pages they've optimized hardest.
-2. The **bio link** (or link-in-bio hub) for creators.
-3. The **homepage hero CTA** or pricing page for companies.
+1. The **ad landing URL** if ads intel found active ads.
+2. The **exact URL each social channel links to** (from the channel map) —
+   this, not the homepage, is the front door for creator-led businesses.
+3. The **homepage hero CTA** or pricing page — but only for companies whose
+   traffic genuinely lands on the homepage (search, direct, brand ads).
 
 If the user pasted a mid-funnel URL directly, start there, then work backwards
 to find what feeds it.
+
+## Expect parallel funnels, not one line
+
+Most operations run **more than one funnel at once**, and forcing them into a
+single chain misrepresents the business. The usual split:
+
+- **Organic path** — social channels → capture page → free content → offer.
+- **Paid path** — ads → a dedicated landing page → checkout, frequently
+  skipping the free layer entirely.
+
+Give each its own `branch` in the chain, with its own entry. *"Their ads bypass
+the free funnel completely"* is a genuine finding, and it is invisible if you
+flatten everything into one line.
+
+## Offers that are not funnel steps
+
+Products reachable only from the site menu — a book store, an application
+page, a legacy offer — are **destinations, not steps**. Record them under
+`other_doors` with a note on how they're reached, and keep them out of the
+chain. Mixing them in invents a journey nobody takes, and it inflates the
+ASCEND score with rungs no visitor is actually walked up.
 
 ## At every hop, capture
 

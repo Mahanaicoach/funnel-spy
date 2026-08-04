@@ -31,8 +31,10 @@ SCORE: [NN]/100 · weakest gate: [GATE] — [why in half a line]
 
 - Entry points: [platforms + cadence; ads: N active on Meta, oldest running
   since <date> (proven winner) — or "no active ads found <date>"]
-- The walk: [chain summary in prose, e.g. "IG bio to Stan hub, hub to free
-  workshop opt-in, opt-in to $497 course checkout — no low-ticket bridge."]
+- The walk: [chain summary in prose, naming each branch, e.g. "organic: all 6
+  channels to one quiz, quiz to free courses, courses to a $5k workshop. Paid:
+  ads land straight on the community checkout, skipping the free layer."
+  Offers reachable only from the menu are listed separately, not as steps.]
   [Then the walk-log table from funnel-walk.md.]
 - The machine: [stack + pixels, with the strategy read in one sentence.]
 - Offer ladder: [rung → offer → price, free to high-ticket; missing rungs

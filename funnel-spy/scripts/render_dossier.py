@@ -142,6 +142,17 @@ def funnel_map_svg(target):
     # band above step 01 rather than pretending the funnel starts at a website.
     chans = (target.get("channels") or [])[:8]
 
+    # A target can run several parallel funnels (organic vs paid). Group the
+    # chain by branch, preserving first-seen order.
+    binfo = target.get("branches") or {}
+    order, groups = [], {}
+    for s in chain:
+        b = s.get("branch", "main")
+        if b not in groups:
+            groups[b] = []
+            order.append(b)
+        groups[b].append(s)
+
     n = len(chain)
     BH = 62 if n <= 5 else (54 if n <= 7 else 46)
     GAP = 24 if n <= 5 else (17 if n <= 7 else 12)
@@ -150,9 +161,11 @@ def funnel_map_svg(target):
         GAP -= 3
     BW, PAD = 470, 12
     W = BW + 2 * PAD
-    CH, FAN = 30, 30               # chip height, fan-in depth
+    CH, FAN = 28, 22               # chip height, fan-in depth
     band = (16 + CH + FAN) if chans else 0
-    H = PAD + band + n * BH + (n - 1) * GAP + PAD
+    ENTRY, HDR = 24, 16            # entry chip for non-first branches, branch header
+    extra = sum(HDR + (ENTRY + 12 if i else 0) for i, _ in enumerate(order))
+    H = PAD + band + extra + n * BH + (n - 1) * GAP + (len(order) - 1) * 6 + PAD
 
     parts = [
         f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
@@ -167,7 +180,7 @@ def funnel_map_svg(target):
                      f'THE FREE CONTENT LAYER &#8212; EVERYONE STARTS HERE</text>')
         cw = (BW - (len(chans) - 1) * 5) / len(chans)
         cy0 = PAD + 8
-        apex = (PAD + BW / 2, cy0 + CH + FAN - 4)
+        apex = (PAD + BW / 2, cy0 + CH + FAN - 4)   # lands just above branch 1
         for i, c in enumerate(chans):
             cx = PAD + i * (cw + 5)
             primary = bool(c.get("primary"))
@@ -191,7 +204,37 @@ def funnel_map_svg(target):
                      f'stroke="{GREEN}" stroke-width="1.6" marker-end="url(#arw)"/>')
 
     y = PAD + band
-    for i, s in enumerate(chain):
+    seq = []                       # (step, y) in draw order, per branch
+    for bi, bname in enumerate(order):
+        meta = binfo.get(bname, {})
+        label = plain(meta.get("label") or ("The main path" if bname == "main" else bname))
+        if bi:
+            y += 6
+        parts.append(f'<text x="{PAD}" y="{y + 10}" font-size="7.6" font-weight="700" '
+                     f'letter-spacing="1.2" fill="{GREY}" font-family="Courier, monospace">'
+                     f'{svg_esc(label.upper())}</text>')
+        y += HDR
+        if bi:                     # this branch has its own entry, not the channel band
+            ent = plain(meta.get("entry") or "")
+            if ent:
+                ew = min(BW, max(150, mono_w(ent, 9) + 30))
+                parts.append(f'<rect x="{PAD + (BW - ew) / 2}" y="{y}" width="{ew}" '
+                             f'height="{ENTRY}" rx="2" fill="#FFFFFF" stroke="{GREEN}" '
+                             f'stroke-width="1.2" stroke-dasharray="3 2"/>')
+                parts.append(f'<text x="{PAD + BW / 2}" y="{y + 17}" text-anchor="middle" '
+                             f'font-size="9" font-weight="700" fill="{GREEN}">'
+                             f'{svg_esc(ent)}</text>')
+                parts.append(f'<line x1="{PAD + BW / 2}" y1="{y + ENTRY + 1}" '
+                             f'x2="{PAD + BW / 2}" y2="{y + ENTRY + 11}" stroke="{GREEN}" '
+                             f'stroke-width="1.6" marker-end="url(#arw)"/>')
+                y += ENTRY + 12
+        for s in groups[bname]:
+            seq.append((s, y, bname))
+            y += BH + GAP
+        y -= GAP
+
+    for idx, (s, y, bname) in enumerate(seq):
+        nxt = seq[idx + 1] if idx + 1 < len(seq) else None
         paid = money_step(s)
         fill = "#EAF0EC" if paid else "#FFFFFF"
         stroke = GREEN if paid else LINE
@@ -203,7 +246,7 @@ def funnel_map_svg(target):
         parts.append(f'<rect x="{PAD}" y="{y}" width="26" height="{BH}" rx="3" fill="{INK}"/>')
         parts.append(f'<text x="{PAD + 13}" y="{y + BH / 2 + 4}" fill="{PAPER}" font-size="12" '
                      f'font-family="Courier, monospace" font-weight="700" '
-                     f'text-anchor="middle">{str(s.get("n", i + 1)).zfill(2)}</text>')
+                     f'text-anchor="middle">{str(s.get("n", idx + 1)).zfill(2)}</text>')
 
         tx = PAD + 38
         right = PAD + BW - 12
@@ -265,11 +308,10 @@ def funnel_map_svg(target):
             parts.append(f'<text x="{tx}" y="{r3}" font-size="{desc_fs}" fill="#4A5148">'
                          f'{svg_esc(q)}</text>')
 
-        if i < len(chain) - 1:
+        if nxt and nxt[2] == bname:      # only connect within the same funnel
             cx = PAD + BW / 2
             parts.append(f'<line x1="{cx}" y1="{y + BH + 4}" x2="{cx}" y2="{y + BH + GAP - 6}" '
                          f'stroke="{LINE}" stroke-width="1.4" marker-end="url(#arw)"/>')
-        y += BH + GAP
 
     parts.append("</svg>")
     return "".join(parts)
@@ -593,17 +635,33 @@ def page_map(t):
            else f'<div class="portrait-none">{initials(t.get("display_name") or t.get("target"))}</div>')
     who = esc(t.get("display_name") or t.get("target"))
     one = esc(t.get("one_liner", ""))
+    doors = t.get("other_doors") or []
+    doorblock = ""
+    if doors:
+        rows = "".join(
+            f'<div class="note" style="margin-bottom:1.2mm">&#8226; <b>{esc(x.get("name"))}</b>'
+            f'{" &middot; " + esc(x.get("price")) if x.get("price") else ""} '
+            f'<span class="mono" style="font-size:7.4pt;color:#1F6E52">{esc(x.get("url",""))}</span>'
+            f'{" &mdash; " + esc(x.get("note")) if x.get("note") else ""}</div>'
+            for x in doors)
+        doorblock = ('<hr class="hr"><div class="keep"><div class="k">SOLD, BUT NOT ON EITHER PATH</div>'
+                     '<div class="note" style="margin:2mm 0 2mm">Reachable only from the site '
+                     'menu &mdash; nothing routes a visitor to these, so they are destinations '
+                     'rather than funnel steps:</div>'
+                     f'{rows}</div>')
     return f"""<div class="page"></div>
 <table><tr>
   <td style="width:28mm">{img}</td>
   <td style="padding-left:5mm;vertical-align:top">
     <h2 class="h">The whole funnel, top to bottom</h2>
-    <div class="lede">{who}. Start at the top: every platform funnels into one page, then
-    follow the arrows straight down to the money. Green boxes are where you pay.</div>
+    <div class="lede">{who}. Only pages traffic is actually sent to appear here. Start at the
+    top: every platform funnels into one page, then follow the arrows down. Green boxes are
+    where you pay.</div>
   </td>
 </tr></table>
 {('<div class="note" style="font-style:italic;margin-bottom:4mm">' + one + '</div>') if one else ''}
-{svg_img(m)}"""
+{svg_img(m)}
+{doorblock}"""
 
 
 def page_channels(t):
@@ -632,13 +690,14 @@ def page_ladder(t):
     l = ladder_svg(t)
     if not l:
         return ""
-    return f"""<div class="page"></div>
+    return f"""<div class="keep" style="margin-top:8mm">
 <h2 class="h">…and then the climb back up</h2>
 <div class="rule"></div>
 <div class="lede">The funnel narrows going down; the money goes the other way. Once someone
 is inside, this is the staircase they climb — each step a bigger price and a smaller crowd.
 Watch for a missing step: that gap is where a competitor gets in.</div>
-{svg_img(l)}"""
+{svg_img(l)}
+</div>"""
 
 
 def page_score(t):

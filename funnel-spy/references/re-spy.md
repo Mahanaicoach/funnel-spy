@@ -36,9 +36,18 @@ and future diffs are generated from:
   "channel_destination": {"name": "The lead-magnet quiz", "url": "site.com/offer"},
   "channel_read": "one paragraph: how many jobs do the channels have?",
   "channel_cross": ["short-form points at the long-form episode", "…"],
+  "branches": {
+    "organic": {"label": "The free path", "entry": "all channels (above)"},
+    "paid": {"label": "The paid path", "entry": "~830 live Meta ads"}
+  },
   "chain": [
-    {"n": 1, "role": "hub", "url": "…", "headline": "…", "cta": "…",
-     "price": null, "evidence": "thedankoe-01-hub.png"}
+    {"n": 1, "branch": "organic", "role": "opt-in", "url": "…", "headline": "…",
+     "cta": "…", "price": null, "from": "what routes traffic here — required",
+     "evidence": "thedankoe-01-optin.png"}
+  ],
+  "other_doors": [
+    {"name": "The books", "url": "…", "price": "$29.99",
+     "note": "navigation only — nothing routes a visitor here"}
   ],
   "offers": [
     {"name": "…", "price": "$497", "rung": "core", "tier": "CONFIRMED",
