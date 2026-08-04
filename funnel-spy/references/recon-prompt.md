@@ -50,28 +50,36 @@ Return exactly these sections:
    content, an ads page). The orchestrator will verify ads in the ad
    libraries — you just surface the leads.
 
-3. OFFERS — every product/offer found with price and tier: courses, cohorts,
+3. CHANNELS — every social platform they run (Instagram, YouTube, TikTok, X,
+   LinkedIn, Facebook, Threads, podcast, newsletter). For each: follower count
+   with source+date, and **the exact URL its bio/description/show-notes links
+   to**. Check for a "socials"/"media" directory page on their own site — it is
+   the fastest complete list. Flag any per-platform landing variants you spot
+   (e.g. /offer-yt vs /offer-ig) and note whether more than one person
+   (co-founder, partner) runs a full stack into the same funnel.
+
+4. OFFERS — every product/offer found with price and tier: courses, cohorts,
    communities, coaching, services, SaaS plans, templates, affiliates,
    sponsorships. Note which is the core engine. Separate the AUDIENCE
    (followers) from the PAYING CUSTOMER if they differ — they usually do.
 
-4. NUMBERS — 2 or 3 metrics that show size and momentum, each with source and
+5. NUMBERS — 2 or 3 metrics that show size and momentum, each with source and
    date. Creators: follower counts per platform (open Social Blade directly:
    socialblade.com/[platform]/user/[handle]), engagement, newsletter subs if
    disclosed. Companies: funding (Crunchbase), headcount and open roles
    (LinkedIn), G2/Capterra review counts, self-reported ARR (tag REPORTED).
    Traffic only as a free order-of-magnitude range, tagged REPORTED.
 
-5. LINKS — directory of their own properties as clickable URLs: site, socials,
+6. LINKS — directory of their own properties as clickable URLs: site, socials,
    newsletter, podcast, hub, community, store. Only links that exist.
 
-6. PORTRAIT — a direct image URL for the target's headshot (or, for a company
+7. PORTRAIT — a direct image URL for the target's headshot (or, for a company
    with no single face, its logo mark). Check their own About/Team/Press page,
    the homepage og:image/twitter:image meta tags, a podcast feed's artwork, or
    a public avatar resolver. Return the URL(s) you found and where each came
    from; if none, say so.
 
-7. SOURCES — the URLs your facts came from (overlaps with LINKS but isn't it).
+8. SOURCES — the URLs your facts came from (overlaps with LINKS but isn't it).
 
 Rules:
 - Tag every claim CONFIRMED (seen on an owned/authoritative page), REPORTED

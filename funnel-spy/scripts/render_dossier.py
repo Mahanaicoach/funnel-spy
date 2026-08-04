@@ -238,6 +238,97 @@ def funnel_map_svg(target):
     return "".join(parts)
 
 
+# ------------------------------------------------------- the channel map ----
+
+def channel_map_svg(target):
+    """Where the traffic comes from: each platform, its exit link, and where
+    they all converge. This is the top of the funnel — the part a website-only
+    map never shows."""
+    chans = target.get("channels") or []
+    if not chans:
+        return ""
+
+    dest = target.get("channel_destination") or {}
+    dest_name = plain(dest.get("name") or "the funnel")
+    dest_url = plain(dest.get("url") or "")
+
+    RH = 40 if len(chans) <= 8 else 33
+    W = 520
+    H = len(chans) * RH + 34
+    LX, LW = 0, 132            # platform box
+    MX = 162                   # link text
+    JX = 366                   # junction (vertical spine)
+    DX = 392                   # destination box
+
+    p = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
+         f'font-family="Helvetica, Arial, sans-serif">',
+         '<defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" '
+         f'markerHeight="6" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="{LINE}"/></marker></defs>']
+
+    p.append(f'<text x="{LX}" y="10" font-size="7.6" font-weight="700" letter-spacing="1.2" '
+             f'fill="{GREY}" font-family="Courier, monospace">PLATFORM</text>')
+    p.append(f'<text x="{MX}" y="10" font-size="7.6" font-weight="700" letter-spacing="1.2" '
+             f'fill="{GREY}" font-family="Courier, monospace">WHERE IT SENDS YOU</text>')
+    p.append(f'<text x="{DX}" y="10" font-size="7.6" font-weight="700" letter-spacing="1.2" '
+             f'fill="{GREY}" font-family="Courier, monospace">THEY ALL LAND HERE</text>')
+
+    top = 22
+    ys = []
+    for i, c in enumerate(chans):
+        y = top + i * RH
+        cy = y + RH / 2 - 4
+        ys.append(cy)
+        primary = bool(c.get("primary"))
+        p.append(f'<rect x="{LX}" y="{y}" width="{LW}" height="{RH - 8}" rx="2" '
+                 f'fill="{"#EAF0EC" if primary else "#FFFFFF"}" '
+                 f'stroke="{GREEN if primary else LINE}" stroke-width="{1.4 if primary else 1}"/>')
+        p.append(f'<text x="{LX + 9}" y="{cy - 1}" font-size="9.5" font-weight="700" '
+                 f'fill="{INK}">{svg_esc(clip(c.get("platform", ""), 20))}</text>')
+        sub = plain(c.get("audience") or "")
+        role = plain(c.get("role") or "")
+        subline = " · ".join(x for x in [sub, role] if x)
+        if subline:
+            p.append(f'<text x="{LX + 9}" y="{cy + 10}" font-size="7.4" fill="{GREY}">'
+                     f'{svg_esc(clip(subline, 30))}</text>')
+
+        # arrow out of the platform
+        p.append(f'<line x1="{LX + LW + 3}" y1="{cy}" x2="{MX - 6}" y2="{cy}" '
+                 f'stroke="{LINE}" stroke-width="1.2" marker-end="url(#a2)"/>')
+
+        link = plain(c.get("links_to") or "")
+        lfs = 8.5 if mono_w(link, 8.5) <= (JX - MX - 12) else max(6.0, (JX - MX - 12) / (len(link) * 0.6))
+        p.append(f'<text x="{MX}" y="{cy + 1}" font-size="{lfs:.1f}" fill="{GREEN}" '
+                 f'font-family="Courier, monospace">{svg_esc(link)}</text>')
+        note = plain(c.get("note") or "")
+        if note and RH >= 40:
+            p.append(f'<text x="{MX}" y="{cy + 11}" font-size="7" fill="{GREY}" '
+                     f'font-style="italic">{svg_esc(clip(note, 42))}</text>')
+
+        # feed into the spine
+        p.append(f'<line x1="{JX - 22}" y1="{cy}" x2="{JX}" y2="{cy}" stroke="{LINE}" stroke-width="1"/>')
+
+    if ys:
+        p.append(f'<line x1="{JX}" y1="{ys[0]}" x2="{JX}" y2="{ys[-1]}" stroke="{LINE}" stroke-width="1"/>')
+        mid = (ys[0] + ys[-1]) / 2
+        p.append(f'<line x1="{JX}" y1="{mid}" x2="{DX - 4}" y2="{mid}" stroke="{GREEN}" '
+                 f'stroke-width="1.6" marker-end="url(#a2)"/>')
+        bh, bw = 56, W - DX
+        by = mid - bh / 2
+        p.append(f'<rect x="{DX}" y="{by}" width="{bw}" height="{bh}" rx="3" fill="#EAF0EC" '
+                 f'stroke="{GREEN}" stroke-width="1.6"/>')
+        for j, ln in enumerate(wrap(dest_name, 17)[:2]):
+            p.append(f'<text x="{DX + bw / 2}" y="{by + 19 + j * 12}" text-anchor="middle" '
+                     f'font-size="9.5" font-weight="700" fill="{INK}">{svg_esc(ln)}</text>')
+        if dest_url:
+            dfs = min(7.5, (bw - 10) / (len(dest_url) * 0.6))
+            p.append(f'<text x="{DX + bw / 2}" y="{by + bh - 12}" text-anchor="middle" '
+                     f'font-size="{dfs:.1f}" fill="{GREEN}" '
+                     f'font-family="Courier, monospace">{svg_esc(dest_url)}</text>')
+
+    p.append("</svg>")
+    return "".join(p)
+
+
 # ------------------------------------------------------------- the ladder ----
 
 def ladder_svg(target):
@@ -478,6 +569,28 @@ def page_map(t):
 {svg_img(m)}"""
 
 
+def page_channels(t):
+    c = channel_map_svg(t)
+    if not c:
+        return ""
+    read = t.get("channel_read")
+    cross = t.get("channel_cross") or []
+    crossblock = ""
+    if cross:
+        rows = "".join(f'<div class="note" style="margin-bottom:1.5mm">&#8226; {esc(x)}</div>'
+                       for x in cross)
+        crossblock = ('<div class="k" style="margin-top:6mm">HOW THE CHANNELS FEED EACH OTHER</div>'
+                      f'<div style="margin-top:2mm">{rows}</div>')
+    return f"""<div class="page"></div>
+<h2 class="h">Where the traffic comes from</h2><div class="rule"></div>
+<div class="lede">Before anyone reaches a sales page they are on a social platform. This is
+every channel he runs, the exact link each one points at, and the single place they all
+funnel into.</div>
+{svg_img(c)}
+{('<div class="note" style="margin-top:5mm">' + esc(read) + '</div>') if read else ''}
+{crossblock}"""
+
+
 def page_ladder(t):
     l = ladder_svg(t)
     if not l:
@@ -672,7 +785,8 @@ def main():
 
     body = [cover(targets, meta)]
     for t in targets:
-        body += [page_map(t), page_ladder(t), page_score(t), page_detail(t, run)]
+        body += [page_channels(t), page_map(t), page_ladder(t), page_score(t),
+                 page_detail(t, run)]
     body.append(page_synthesis(syn, targets))
 
     doc = (f'<html><head><meta charset="utf-8"><style>{CSS}</style></head>'

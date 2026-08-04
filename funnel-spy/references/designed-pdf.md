@@ -49,15 +49,18 @@ that needs a paragraph to explain a concept has failed; draw it instead.
 
 1. **Cover** — deep ink-green, mono type, the target's portrait plate(s), a
    manifest block (subject, date, method) and the evidence-tier stamps.
-2. **The funnel map** — portrait, one-line read, then the map. The hero page.
-3. **The staircase** — the offer ladder as a bar chart.
-4. **The scorecard** — headline number chips (coloured by evidence tier), the
+2. **The channel map** — "Where the traffic comes from": every platform, the
+   exact link it points at, and the convergence into one entry page. The funnel
+   above the website; comes first because that is where the visitor starts.
+3. **The funnel map** — portrait, one-line read, then the map. The hero page.
+4. **The staircase** — the offer ladder as a bar chart.
+5. **The scorecard** — headline number chips (coloured by evidence tier), the
    big total, and the four gate bars.
-5. **Under the hood** — tool/pixel chips with the strategy read, the ads block
+6. **Under the hood** — tool/pixel chips with the strategy read, the ads block
    **including a clickable link to each ad library so the reader can go see
    every ad themselves**, the swipe file, screenshot filmstrip, and a clickable
    directory of every door in the funnel.
-6. **So what do you do about it?** — ranking (multi-target), the FINDING stamp
+7. **So what do you do about it?** — ranking (multi-target), the FINDING stamp
    box, Your Way In, Steal/Fix This Week, and what could not be checked.
 
 Sections whose data is missing are skipped automatically — a recon-only run

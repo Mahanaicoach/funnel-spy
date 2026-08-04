@@ -12,7 +12,8 @@ You hand it competitors. For **each one**, it walks the sales funnel the way a s
 - **The Walk** — the live page-by-page path, captured with screenshots
 - **The Machine** — the software and pixels running it, and what that stack implies
 - **The Offer Ladder** — every rung with prices, and the missing rungs
-- **The Scorecard** — five gates, 0–100, weakest gate named
+- **The channel map** — every platform, its job, its exit link, and where they converge
+- **The Scorecard** — four gates, 0–100, weakest gate named
 
 Then a **synthesis**: shared patterns, a Best-Engineered ranking, and (if you told it what you sell) Your Opening + Steal This Week.
 
@@ -28,27 +29,30 @@ The difference from ordinary competitor research: it doesn't summarize what peop
 
 **3. Recon fans out.** One agent per competitor, in parallel, each mapping the funnel chain: the front door, the hub, the opt-in, the offers and prices, the numbers. Recon finds the doors.
 
-**4. The Walk.** The orchestrator goes through them: loads each page, captures headline / CTA / price / proof / friction, screenshots it, follows the primary CTA, and stops at the checkout. It also mines `sitemap.xml`, `robots.txt`, and the Wayback Machine for what the funnel hides — thank-you pages, upsell pages, last year's pricing ("they raised the core offer from $497 to $997 in March" is a finding nobody's summary will give you).
+**4. The channel map.** Before touching the website it maps the social layer: every platform, its audience, what each one is *for*, and the exact URL each points at — then where they all converge. It probes for per-platform landing variants (with a nonsense control to prove the site really 404s) and diffs them: identical content means pure attribution tracking, different content means that channel gets bespoke production. Most teardowns skip this layer entirely.
 
-**5. The copy teardown.** Every money page (opt-in, sales page, checkout) gets read like a copywriter reads it: which awareness level the page assumes vs. where the traffic actually comes from (the mismatch is one of the sharpest findings there is), the hook type, the offer stack and price anchoring, the guarantee, the urgency type — real event or evergreen automation — proof density, and the CTA. Each page ends with the one move worth stealing.
+**5. The Walk.** The orchestrator goes through them: loads each page, captures headline / CTA / price / proof / friction, screenshots it, follows the primary CTA, and stops at the checkout. It also mines `sitemap.xml`, `robots.txt`, and the Wayback Machine for what the funnel hides — thank-you pages, upsell pages, last year's pricing ("they raised the core offer from $497 to $997 in March" is a finding nobody's summary will give you).
 
-**6. The Machine.** Page source gets matched against real signatures: funnel builders (ClickFunnels, GoHighLevel, Kajabi, Skool…), email tools (Kit, Beehiiv, ManyChat…), checkouts (Stripe, SamCart, Whop…), schedulers, and every major ad pixel. Each hit comes with its meaning — Deadline Funnel means the countdown is evergreen automation, not an event; Calendly means the real close is a human on a call.
+**6. The copy teardown.** Every money page (opt-in, sales page, checkout) gets read like a copywriter reads it: which awareness level the page assumes vs. where the traffic actually comes from (the mismatch is one of the sharpest findings there is), the hook type, the offer stack and price anchoring, the guarantee, the urgency type — real event or evergreen automation — proof density, and the CTA. Each page ends with the one move worth stealing.
 
-**7. Ads intel.** Meta Ad Library and Google Ads Transparency get checked directly: active count, formats, and **longevity** — an ad running 90+ days is a proven winner. The ads' destination URLs go back into the walk, because paid landing pages are the entrances the bio link never shows you.
+**7. The Machine.** Page source gets matched against real signatures: funnel builders (ClickFunnels, GoHighLevel, Kajabi, Skool…), email tools (Kit, Beehiiv, ManyChat…), checkouts (Stripe, SamCart, Whop…), schedulers, and every major ad pixel. Each hit comes with its meaning — Deadline Funnel means the countdown is evergreen automation, not an event; Calendly means the real close is a human on a call.
 
-**8. Scorecard.** Five gates, each 0–20 against fixed anchors:
+**8. Ads intel.** Meta Ad Library and Google Ads Transparency get checked directly: active count, formats, and **longevity** — an ad running 90+ days is a proven winner. The ads' destination URLs go back into the walk, because paid landing pages are the entrances the bio link never shows you.
+
+**9. Scorecard.** Four gates, each 0–25 against fixed anchors — only things an outsider can actually verify:
 
 | Gate | Question it answers |
 |---|---|
 | **ATTRACT** | Is there a real traffic engine — consistent content, ads, an owned audience? |
 | **CAPTURE** | Does attention become a contact — lead magnet, low-friction opt-in, comment-to-DM? |
-| **NURTURE** | Is there a middle — email sequence, community, DM follow-up? |
 | **CONVERT** | Does the offer page close — promise, proof, guarantee, honest urgency? |
 | **ASCEND** | Is there a ladder — bumps, upsells, continuity, high-ticket path? |
 
+Email nurture is deliberately **not** scored: what a brand sends its subscribers can't be observed from outside, and a score you can't evidence is a guess wearing a number.
+
 The weakest gate is the headline finding: on a competitor it's your opening, on your own funnel it's the leak.
 
-**9. Deliver.** The flagship is the **Funnel Dossier PDF** — a case-file-styled report: the target's portrait on the cover and again on their dossier page (sourced and credited like every other fact), the funnel drawn as a numbered rail, captured copy in monospace, evidence-tier stamps, gate bars, and a screenshot filmstrip. It renders the file and *looks at the pages* before handing it over. Alongside it, every run saves a machine-readable `dossier.json` per target — that's what powers the diff (Part 4).
+**10. Deliver.** The flagship is the **Funnel Dossier PDF** — a case-file-styled report: the target's portrait on the cover and again on their dossier page (sourced and credited like every other fact), the channel map, the funnel drawn as a flow diagram, the offer ladder as a staircase, gate bars, and clickable ad-library links. It renders the file and *looks at the pages* before handing it over. Alongside it, every run saves a machine-readable `dossier.json` per target — that's what powers the diff (Part 4).
 
 ---
 

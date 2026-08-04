@@ -29,6 +29,13 @@ and future diffs are generated from:
   "run_date": "2026-08-04",
   "walk_mode": "browser|fetch",
   "portrait": {"path": "portraits/thedankoe.jpg", "source": "thedankoe.com/about"},
+  "channels": [
+    {"platform": "YouTube", "audience": "~4.3M", "role": "primary engine",
+     "primary": true, "links_to": "site.com/offer-yt", "note": "own page variant"}
+  ],
+  "channel_destination": {"name": "The lead-magnet quiz", "url": "site.com/offer"},
+  "channel_read": "one paragraph: how many jobs do the channels have?",
+  "channel_cross": ["short-form points at the long-form episode", "…"],
   "chain": [
     {"n": 1, "role": "hub", "url": "…", "headline": "…", "cta": "…",
      "price": null, "evidence": "thedankoe-01-hub.png"}
@@ -94,6 +101,9 @@ what evidently worked, what it means for the user's anchor.]
   before: pull 6–12-month-old snapshots of the money pages and diff against
   today, tagged appropriately (archive snapshots are CONFIRMED-as-of-their-
   date).
+- **Channel changes are high-signal**: a new platform, a retired one, or a
+  changed bio-link destination means they re-pointed their whole top of funnel.
+  Diff `channels[].links_to` explicitly.
 - Score drift matters more than any single delta — a competitor whose CONVERT
   and ASCEND gates both climbed is systematically optimizing; say so in the
   Best-Engineered ranking of the new run.

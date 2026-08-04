@@ -38,9 +38,10 @@ them.
 
 For each target you deliver five things:
 
-1. **Entry points** — where strangers enter the funnel: which platforms, which
-   content, and whether paid ads are feeding it (checked against the ad
-   libraries, not guessed).
+1. **The channel map** — every social platform they run, what each one is for,
+   the exact link each points at, and the single place they all converge.
+   Paid entry points are verified in the ad libraries, not guessed. This is the
+   funnel *above* the website, and most teardowns miss it entirely.
 2. **The Walk** — the actual page-by-page path from first click to checkout,
    captured live: every hop's headline, CTA, price, proof, and friction, with a
    screenshot as evidence.
@@ -158,6 +159,26 @@ If subagents aren't available, do the recon yourself per target, same standard.
 **Enough is enough:** recon should confirm the funnel entrance, the core offer
 and its price, and the capture mechanism. Don't burn searches chasing every
 minor product — note what wasn't found and move on. The walk will fill gaps.
+
+## Step 4c — Map the channel layer (the funnel above the website)
+
+Before walking the site, map the **social layer** per
+`references/channel-map.md`: every platform the target runs, its audience, its
+job (primary engine / reach / authority / B2B / repurposed), and — the key
+field — **the exact URL each one points at**. Then the convergence: the one or
+two pages every channel feeds.
+
+Hunt for **per-platform landing variants** (`/offer-yt`, `/offer-ig`, utm
+variants). Probe the obvious siblings, always probe a nonsense control to prove
+the site 404s on unknown paths, and diff the variants: identical content means
+attribution tracking, different content means that channel gets bespoke effort.
+Record cross-channel routing too — short-form feeding long-form, a site-wide
+socials directory, or multiple principals each running a full stack into the
+same funnel.
+
+This lands in `channels`, `channel_destination`, `channel_read` and
+`channel_cross` in the dossier, and renders as the report's first diagram. It
+also tells you which entry point to walk first in Step 5.
 
 ## Step 5 — Walk each funnel (the core of this skill)
 
