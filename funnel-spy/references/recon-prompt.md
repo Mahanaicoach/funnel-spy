@@ -65,7 +65,13 @@ Return exactly these sections:
 5. LINKS — directory of their own properties as clickable URLs: site, socials,
    newsletter, podcast, hub, community, store. Only links that exist.
 
-6. SOURCES — the URLs your facts came from (overlaps with LINKS but isn't it).
+6. PORTRAIT — a direct image URL for the target's headshot (or, for a company
+   with no single face, its logo mark). Check their own About/Team/Press page,
+   the homepage og:image/twitter:image meta tags, a podcast feed's artwork, or
+   a public avatar resolver. Return the URL(s) you found and where each came
+   from; if none, say so.
+
+7. SOURCES — the URLs your facts came from (overlaps with LINKS but isn't it).
 
 Rules:
 - Tag every claim CONFIRMED (seen on an owned/authoritative page), REPORTED

@@ -14,7 +14,7 @@ Hand it any competitor — an Instagram/TikTok/X/LinkedIn handle, a company name
 
 Then a cross-competitor synthesis: shared funnel patterns, a **Best-Engineered ranking**, and — if you tell it what *you* sell — **Your Opening** plus **Steal This Week**: three moves you can copy in days, each traceable to a page it actually walked.
 
-Flagship output is the **Funnel Dossier** — a designed PDF that reads like a case file: the funnel drawn as a rail, captured copy in monospace, evidence-tier stamps, and a screenshot filmstrip.
+Flagship output is the **Funnel Dossier** — a designed PDF that reads like a case file: the target's photo on the cover and their dossier page, the funnel drawn as a rail, captured copy in monospace, evidence-tier stamps, and a screenshot filmstrip.
 
 > Built and given away by **Mahan Ai**. If this is useful, follow [@mahanaicoach](https://instagram.com/mahanaicoach) for more Claude + automation builds.
 
@@ -109,7 +109,7 @@ The playbooks live in [`funnel-spy/references/`](funnel-spy/references/) — the
 |---|---|
 | [`funnel-spy.skill`](funnel-spy.skill) | The packaged skill — download this to install in the desktop app |
 | [`funnel-spy/SKILL.md`](funnel-spy/SKILL.md) | The skill's brain: the step-by-step instructions Claude follows |
-| [`funnel-spy/references/`](funnel-spy/references/) | Walk playbook, copy teardown, stack signatures, ads intel, benchmarks, re-spy diffs, output templates, dossier design |
+| [`funnel-spy/references/`](funnel-spy/references/) | Walk playbook, copy teardown, stack signatures, ads intel, benchmarks, re-spy diffs, portraits, output templates, dossier design |
 | [`funnel-spy/evals/evals.json`](funnel-spy/evals/evals.json) | Test cases proving the skill works on real targets |
 | [`INSTALL.md`](INSTALL.md) | Detailed install for both the desktop app and Claude Code |
 

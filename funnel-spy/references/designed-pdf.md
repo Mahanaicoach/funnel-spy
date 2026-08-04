@@ -41,16 +41,21 @@ evidence**:
 
 1. **Cover** — full-bleed deep ink-green (`#0C1F18`), mono type. Top line:
    `CASE FILE · FUNNEL SPY`. Big title = the run's subject ("3 funnels,
-   walked"). A mono manifest block listing the targets like case items, the
-   run date, walk mode (browser-walked with screenshots vs fetch-based), and
-   the tier legend as three stamps. Bottom line: "Prepared with the Funnel Spy
-   skill · Mahan Ai".
+   walked"). **A row of target portrait plates** — the face of each person
+   being spied on, grayscale, hairline-bordered, handle in mono underneath
+   (see `references/target-portrait.md` for sourcing and the no-image
+   fallback). Then a mono manifest block listing the targets like case items,
+   the run date, walk mode (browser-walked with screenshots vs fetch-based),
+   and the tier legend as three stamps. Bottom line: "Prepared with the Funnel
+   Spy skill · Mahan Ai".
 2. **Scoreboard** — one row per target, ranked: rank number, name, total
    score in big mono digits, then five small labeled gate bars (0–20 each) in
    signal green with the weakest gate's bar in REPORTED amber. Caption states
    plainly: "Rubric-scored qualitative read — see gate anchors."
 3. **One dossier spread per target** (`page-break-before`):
-   - Header: handle + real name, one-line read, score badge, confidence note.
+   - Header: the target's **portrait** (~22mm square, grayscale, hairline
+     border, mono source credit beneath) at the left, with handle + real name,
+     one-line read, score badge, and confidence note beside it.
    - **The walk rail** — the funnel map, drawn as a vertical rail: numbered
      step markers connected by a hairline, each step a row: role stamp
      (`OPT-IN`), mono URL, one-line capture (headline → CTA → price). This
@@ -82,19 +87,21 @@ HTML(string=doc, base_url=".").write_pdf("Funnel-Dossier.pdf")
 ```
 
 Build the HTML from a Python list of per-target dicts so layout stays
-consistent: `handle, name, one, score, gates` (dict of 5 ints), `walk` (list
-of step dicts: `n, role, url, capture`), `chips` (list of `(value, label,
-tier)`), `ladder` (list of `(rung, offer, price)`), `stack`, `pixels`,
-`swipes`, `shots` (list of `(path, caption)`), `links, conf`.
+consistent: `handle, name, one, score, gates` (dict of 5 ints), `portrait`
+(path + source credit), `walk` (list of step dicts: `n, role, url, capture`),
+`chips` (list of `(value, label, tier)`), `ladder` (list of `(rung, offer,
+price)`), `stack`, `pixels`, `swipes`, `shots` (list of `(path, caption)`),
+`links, conf`.
 
-Screenshots embed by relative path from the run folder — pass `base_url` so
-WeasyPrint resolves them.
+Portraits and screenshots embed by relative path from the run folder — pass
+`base_url` so WeasyPrint resolves them.
 
 **Verify before delivering:** render pages to images (`pdftoppm -jpeg -r 90
 Funnel-Dossier.pdf page`) and actually look at them — check the rail aligns,
-bars match scores, nothing overflows, filmstrip images loaded (a missing image
-renders as a blank box; that's a bug, fix it). Design bugs are invisible in
-code. If WeasyPrint can't install, fall back to ReportLab and reproduce the
+bars match scores, nothing overflows, and that **every portrait and filmstrip
+image actually loaded and shows the right subject** (a missing image renders
+as a blank box; a wrong face is worse — both are bugs, fix them). Design bugs
+are invisible in code. If WeasyPrint can't install, fall back to ReportLab and reproduce the
 same four-part structure.
 
 ## Key CSS
@@ -127,6 +134,15 @@ body { font-family: Helvetica, Arial, sans-serif; color: #131912;
 .gatebar { height: 8px; background: #E4E1D4; }
 .gatefill { height: 8px; background: #1F6E52; }
 .gatefill.weak { background: #B07818; }
+.plate { width: 26mm; height: 30mm; object-fit: cover; border: 1pt solid #3E5D4E;
+  filter: grayscale(1) contrast(1.08); }
+.plate-lbl { font-family: Courier, monospace; font-size: 7.5pt; letter-spacing: 1px;
+  color: #9FBAAD; margin-top: 2mm; }
+.portrait { width: 22mm; height: 22mm; object-fit: cover; border: 0.8pt solid #B9B4A4;
+  filter: grayscale(1) contrast(1.06); }
+.portrait-src { font-family: Courier, monospace; font-size: 6.5pt; color: #8A8676; }
+.no-portrait { width: 22mm; height: 22mm; background: #EFECE0; border: 0.8pt solid #B9B4A4;
+  font-family: Courier, monospace; font-size: 11pt; color: #8A8676; text-align: center; }
 .rail { border-left: 0.8pt solid #B9B4A4; margin-left: 4mm; padding-left: 6mm; }
 .step { position: relative; padding: 2.2mm 0; page-break-inside: avoid; }
 .step .n { position: absolute; left: -8.6mm; top: 2.2mm; width: 5mm; height: 5mm;

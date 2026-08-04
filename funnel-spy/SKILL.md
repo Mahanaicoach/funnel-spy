@@ -127,9 +127,14 @@ If the user already stated any of these, don't re-ask.
 ## Step 3 — Set up the run
 
 - Create one task per target plus one synthesis task so progress is visible.
-- Create a run folder for evidence: `funnel-spy-run-<date>/screenshots/`.
-  Screenshots are named `<target>-<nn>-<role>.png` (e.g.
-  `thedankoe-03-optin.png`).
+- Create a run folder for evidence: `funnel-spy-run-<date>/` with
+  `screenshots/` and `portraits/` inside. Screenshots are named
+  `<target>-<nn>-<role>.png` (e.g. `thedankoe-03-optin.png`); portraits are
+  `portraits/<target>.jpg`.
+- **Grab each target's portrait** per `references/target-portrait.md` — the
+  face goes on the dossier cover and on that target's spread. Look at each
+  downloaded image to confirm it's real and the right subject; use the
+  initials fallback plate rather than any invented or stock image.
 - Every run also writes one machine-readable `dossier.json` per target into
   the run folder (schema in `references/re-spy.md`) — it's the single source
   of truth the deliverables render from, and it's what makes future runs
@@ -283,10 +288,12 @@ still get a one-off drift read via Wayback snapshots of the money pages.
 ## Step 11 — Deliver
 
 - **Funnel Dossier PDF (flagship)** — read `references/designed-pdf.md` and
-  build it: dossier cover, the five-gate scoreboard, one dossier spread per
-  target (funnel-map rail, stat chips, offer ladder, tech chips, swipe file,
-  screenshot filmstrip), then the synthesis page. Render with WeasyPrint and
-  **look at the rendered pages before delivering** — render to images and check.
+  build it: dossier cover with the target portrait plates, the five-gate
+  scoreboard, one dossier spread per target (portrait + header, funnel-map
+  rail, stat chips, offer ladder, tech chips, swipe file, screenshot
+  filmstrip), then the synthesis page. Render with WeasyPrint and **look at
+  the rendered pages before delivering** — render to images and check that
+  every portrait and screenshot actually loaded.
 - **Chat summary** — per-target dossiers then synthesis, structured per
   `references/output-formats.md`. No gray walls: lead each target with its
   score, its weakest gate, and the two numbers that matter.

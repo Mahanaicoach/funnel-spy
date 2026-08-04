@@ -28,6 +28,7 @@ and future diffs are generated from:
   "target": "thedankoe",
   "run_date": "2026-08-04",
   "walk_mode": "browser|fetch",
+  "portrait": {"path": "portraits/thedankoe.jpg", "source": "thedankoe.com/about"},
   "chain": [
     {"n": 1, "role": "hub", "url": "…", "headline": "…", "cta": "…",
      "price": null, "evidence": "thedankoe-01-hub.png"}

@@ -48,7 +48,7 @@ The difference from ordinary competitor research: it doesn't summarize what peop
 
 The weakest gate is the headline finding: on a competitor it's your opening, on your own funnel it's the leak.
 
-**9. Deliver.** The flagship is the **Funnel Dossier PDF** — a case-file-styled report: the funnel drawn as a numbered rail, captured copy in monospace, evidence-tier stamps, gate bars, and a screenshot filmstrip. It renders the file and *looks at the pages* before handing it over. Alongside it, every run saves a machine-readable `dossier.json` per target — that's what powers the diff (Part 4).
+**9. Deliver.** The flagship is the **Funnel Dossier PDF** — a case-file-styled report: the target's portrait on the cover and again on their dossier page (sourced and credited like every other fact), the funnel drawn as a numbered rail, captured copy in monospace, evidence-tier stamps, gate bars, and a screenshot filmstrip. It renders the file and *looks at the pages* before handing it over. Alongside it, every run saves a machine-readable `dossier.json` per target — that's what powers the diff (Part 4).
 
 ---
 
