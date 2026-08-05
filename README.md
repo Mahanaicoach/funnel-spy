@@ -23,6 +23,10 @@ Flagship output is the **Funnel Dossier** — a designed PDF that reads like a c
 
 ## Quick start (60 seconds)
 
+**In a hurry?** Paste [this one prompt](PROMPT.md) into Claude Code and it clones the skill and runs it in the same message — nothing to install.
+
+Otherwise, install it properly:
+
 1. **Download** [`funnel-spy.skill`](funnel-spy.skill) from this repo. *(Click the file → the **Download** button.)*
 2. **Open it** in the Claude desktop app and click **Save skill**.
 3. In any chat, just say:
@@ -114,6 +118,7 @@ The playbooks live in [`funnel-spy/references/`](funnel-spy/references/) — the
 | [`funnel-spy/references/`](funnel-spy/references/) | Channel map, walk playbook, copy teardown, stack signatures, ads intel, benchmarks, re-spy diffs, portraits, output templates, dossier design |
 | [`funnel-spy/scripts/render_dossier.py`](funnel-spy/scripts/render_dossier.py) | Draws the PDF from the run's JSON — the whole delivery step |
 | [`funnel-spy/evals/evals.json`](funnel-spy/evals/evals.json) | Test cases proving the skill works on real targets |
+| [`PROMPT.md`](PROMPT.md) | The copy-paste prompt — run it without installing anything |
 | [`INSTALL.md`](INSTALL.md) | Detailed install for both the desktop app and Claude Code |
 
 ---
