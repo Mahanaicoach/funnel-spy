@@ -30,6 +30,69 @@ That's it. It clones the skill, follows it, and hands you a designed PDF.
 
 ---
 
+## The complete version
+
+When you want every step spelled out — nothing left to chance, which is what
+you want when you're recording:
+
+```
+Clone https://github.com/Mahanaicoach/funnel-spy into this folder and read
+funnel-spy/funnel-spy/SKILL.md — then follow that skill exactly, start to finish.
+
+TARGET:  @hormozi
+I SELL:  an Ai automation course at $497
+OUTPUT:  the Funnel Dossier PDF, Full Spy depth
+
+Run the whole pipeline:
+
+1. CHANNEL MAP — find every platform they run (Instagram, YouTube, TikTok, X,
+   LinkedIn, Facebook, podcast, newsletter). For each: follower count with a
+   source, what that channel is for, and the exact URL its bio / description /
+   show notes points at. Look for a "socials" or "media" directory on their own
+   site. Hunt for per-platform landing variants (/offer-yt vs /offer-ig), probe
+   a nonsense control to prove the site really 404s, and diff the variants —
+   identical content means attribution tracking, different content means that
+   channel gets bespoke effort. Then find the one page they all converge on.
+
+2. THE WALK — start where traffic actually lands, NOT the homepage. Follow the
+   primary CTA page by page to the checkout, screenshotting every page. Capture
+   the headline, CTA, price, proof and friction verbatim. Only include a page if
+   you can name what routes traffic to it — offers reachable solely from the
+   site menu are destinations, not funnel steps. Expect separate organic and
+   paid funnels; give each its own branch rather than one straight line. Mine
+   sitemap.xml, robots.txt and the Wayback Machine for pages the funnel hides.
+
+3. THE MACHINE — fetch the page source of the money pages and detect the funnel
+   builder, email platform, checkout, scheduler, DM automation and every
+   tracking pixel. Say what the stack implies strategically, not just what it is.
+
+4. ADS — check the Meta Ad Library scoped to their ADVERTISER PAGE: use the
+   library typeahead to get view_all_page_id, never a keyword search (keywords
+   match ad text and return unrelated advertisers). Also check the Google Ads
+   Transparency Center. Record the active ad count, how long the oldest running
+   ad has been live, and the landing URLs — then walk those landing pages too.
+   Keep both library URLs; they ship as clickable links in the report.
+
+5. COPY TEARDOWN on each money page — the awareness level it assumes versus
+   where the traffic actually comes from, the hook type, offer stack and price
+   anchoring, guarantee, urgency (a real event or evergreen automation), proof
+   density, and the CTA.
+
+6. SCORE the four gates — Attract, Capture, Convert, Ascend, 25 points each —
+   and name the weakest one. Do not score email nurture; it cannot be observed
+   from outside.
+
+7. DELIVER — write dossier.json and synthesis.json into the run folder, run
+   scripts/render_dossier.py on it, then render the PDF pages to images and
+   actually look at them before handing anything over. Give me the PDF plus:
+   where my opening is, and three moves I can steal this week.
+
+Tag every claim CONFIRMED, REPORTED or INFERRED. Never invent a price, follower
+count or URL — report "not found" instead.
+```
+
+---
+
 ## The short version
 
 If you already told it what you sell, this is enough:
