@@ -120,6 +120,7 @@ The playbooks live in [`funnel-spy/references/`](funnel-spy/references/) — the
 | [`funnel-spy/evals/evals.json`](funnel-spy/evals/evals.json) | Test cases proving the skill works on real targets |
 | [`PROMPT.md`](PROMPT.md) | The copy-paste prompt — run it without installing anything |
 | [`INSTALL.md`](INSTALL.md) | Detailed install for both the desktop app and Claude Code |
+| [`update.sh`](update.sh) | Pulls the latest version and refreshes your installed copy |
 
 ---
 
@@ -147,6 +148,24 @@ Everything else (chat, spreadsheet, Word doc) works without it.
 ## The sibling skill
 
 Funnel Spy goes **deep on the machine**. If you want the wide-angle read on a competitor — ICP, positioning, monetization, threat ranking — grab its sibling, [**Competitor X-Ray**](https://github.com/Mahanaicoach/competitor-x-ray). They're built to be run back to back: X-Ray to pick who matters, Funnel Spy to take their machine apart.
+
+---
+
+## Updating
+
+**Claude desktop app:** download the latest [`funnel-spy.skill`](funnel-spy.skill) and click **Save skill**
+again.
+
+**Claude Code:** from your clone (of this repo or of your fork), run:
+
+```bash
+bash update.sh
+```
+
+It pulls the latest version, keeps your own commits, and refreshes your copy in
+`~/.claude/skills/funnel-spy` and the `/funnel-spy` command, if you installed it.
+Forked it on GitHub? Run `git push` afterwards, or click **Sync fork** on your fork's
+page.
 
 ---
 
